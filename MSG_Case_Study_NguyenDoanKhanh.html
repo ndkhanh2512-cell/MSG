@@ -909,6 +909,8 @@
   .lc-fine{display:flex;align-items:center;gap:12px;margin-top:10px;padding:10px 14px;border-radius:14px;background:#FFF1F3;border:1px solid #F6CFD7}
   .lc-fine b{flex:none;font-size:30px;font-weight:800;line-height:1;color:#D92D55}
   .lc-fine span{font-size:12.5px;line-height:1.4;color:#5A2230} .lc-fine strong{color:#B0213F}
+  .kpi-card .ka{display:block;white-space:normal;max-width:340px;margin:8px auto 0;padding-top:7px;border-top:1px dashed #F0C9D1;font-size:11.5px;line-height:1.4;color:#6B7A75;font-style:normal}
+  .kpi-card .ka b{color:#8A6200;background:#FFF4D6;border-radius:999px;padding:1px 7px;margin-right:4px;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase}
   /* glossary: dotted underline on terms, chip beside the page counter, definitions popup */
   abbr.gl{text-decoration:none;cursor:help} /* explanation on hover, no underline */
   .gloss-chip{position:absolute;right:16px;bottom:16px;z-index:7;appearance:none;cursor:pointer;display:flex;gap:7px;align-items:center;max-width:38vw;
@@ -2016,7 +2018,7 @@ const DIRECT_LINKS = CURRENT_FLOWS.length - 6; // point-to-point links today (sa
 // Caption floating over the tangle, shown only in today's scenario
 const tangleEl = document.createElement('div');
 tangleEl.className = 'kpi-card bad tangle';
-tangleEl.innerHTML = `<span class="kt bad">● Hiện trạng</span><span class="kv">${DIRECT_LINKS}</span><span class="ku">đường nối riêng lẻ giữa các hệ thống</span><span class="kn">chậm, dễ lỗi, khó mở rộng · ảnh hưởng trải nghiệm khách hàng</span>`;
+tangleEl.innerHTML = `<span class="kt bad">● Hiện trạng</span><span class="kv">${DIRECT_LINKS}</span><span class="ku">đường nối riêng lẻ giữa các hệ thống</span><span class="kn">chậm, dễ lỗi, khó mở rộng · ảnh hưởng trải nghiệm khách hàng</span><span class="ka"><b>Giả định</b> khi chưa có số liệu nội bộ: 11 đường nối, mức tải HIS 85 %, Workit 80 %. Sẽ đo lại trong 30 ngày đầu.</span>`;
 document.getElementById('kpiDock').appendChild(tangleEl); // shown in the key-figure dock, not floating in 3D
 
 // Target architecture: numbered as in the approved plan
@@ -2592,7 +2594,7 @@ const GAP = {
   '1.1': 'Hệ thống nối rời rạc, dữ liệu lệch, chưa đối soát tự động',
   '1.2': 'Báo cáo thời gian thực truy vấn thẳng HIS, Workit, gây chậm',
   '2.1': 'Chưa có báo cáo ngoại lệ phát hiện bất thường',
-  '2.2': 'Password quản trị chưa quản lý tập trung',
+  '2.2': 'Mật khẩu quản trị chưa quản lý tập trung',
   '2.3': 'Chưa có chiến lược bảo mật và DR (RPO/RTO)',
   '3.1': 'Phối hợp IT Tập đoàn và IT thành viên chưa rõ',
   '3.2': 'Đề xuất KPI/SLA và lộ trình ưu tiên',
@@ -2728,11 +2730,11 @@ const STEPS = [
     gap: 'Đối soát tự động',  // banner wording for this step
     id: 'A3', ch: 1, de: '1.1', answers: 'Trả lời ý 1a · xác thực và đối soát tự động', scenario: 1,
     title: 'Tự động đối chiếu doanh thu: ngày, đêm, tuần, tháng',
-    lines: ['<b>4 nhịp</b> so doanh thu HIS ↔ Workit: <b>3 lần mỗi ngày</b> · <b>mỗi đêm</b> so đủ bốn cặp (thêm bệnh nhân HIS ↔ CRM, nhân sự HRM ↔ tài khoản, số dòng gửi ↔ nhận) · <b>cuối tuần</b> so tổng tuần · <b>cuối tháng</b> so tổng tháng <b>trước khi khóa sổ ngày 5</b>.',
+    lines: ['<b>4 tần suất</b> đối soát doanh thu HIS ↔ Workit: <b>3 lần mỗi ngày</b> · <b>mỗi đêm</b> so đủ bốn cặp (thêm bệnh nhân HIS ↔ CRM, nhân sự HRM ↔ tài khoản, số dòng gửi ↔ nhận) · <b>cuối tuần</b> so tổng tuần · <b>cuối tháng</b> so tổng tháng <b>trước khi khóa sổ ngày 5</b>.',
             'Một vòng xử lý: <b>quy tắc cố định so số</b>, AI phân loại nguyên nhân. <b>Thiếu giao dịch</b>: tự đẩy lại từ HIS sang Workit qua API Gateway, chống trùng theo mã giao dịch, chạy lại sau X giờ. <b>Lệch số tiền</b> hoặc vẫn còn lệch: phiếu ITSM cho Kế toán, sửa trong 24 giờ. Teams / email báo khi vượt ngưỡng.',
-            '<b>Giai đoạn 1</b>, chưa có Data realtime: đọc thẳng HIS, Workit bằng tài khoản <b>chỉ đọc</b>, chỉ lấy số tổng, chạy ngoài giờ cao điểm. <b>Giai đoạn 2</b>: đọc Data realtime cho nhịp trong ngày, Data Warehouse cho đêm, tuần, tháng.',
+            '<b>Giai đoạn 1</b>, chưa có Data realtime: đọc thẳng HIS, Workit bằng tài khoản <b>chỉ đọc</b>, chỉ lấy số tổng, chạy ngoài giờ cao điểm. <b>Giai đoạn 2</b>: đọc Data realtime cho các lần trong ngày, Data Warehouse cho đêm, tuần, tháng.',
             'Tháng: ngưỡng lệch bằng 0. Sau ngày 5 đã khóa sổ thì không tự ghi, chênh lệch thành <b>bút toán điều chỉnh</b> do Kế toán trưởng duyệt. X giờ, số lần chạy lại, ngưỡng tự xử lý <b>cấu hình theo quy trình MSG</b>.',
-            '<button type="button" class="recon-btn" data-recon>Xem 4 nhịp đối soát →</button>'],
+            '<button type="button" class="recon-btn" data-recon>Xem 4 tần suất đối soát →</button>'],
     why: ['Vì sao', 'không hệ thống nào xóa được 100 % sai lệch. Cái làm được là phát hiện trong đêm, sửa sáng hôm sau.'],
     focus: ['his', 'workit', 'crm', 'hrm', 'realtime', 'dwh', 'ai', 'gateway', 'itsm', 'pbi'],
     // read: HIS/Workit -> Data realtime (intra-day) and -> warehouse (night, week, month); act: AI -> Gateway -> Workit (re-push) or ITSM (ticket)
@@ -2743,7 +2745,7 @@ const STEPS = [
              || (f.from === 'gateway' && f.to === 'workit' && f.type === 'write')
              || (f.from === 'gateway' && f.to === 'itsm')
              || (f.from === 'dwh' && f.to === 'pbi'),
-    kpi: { pos: [11.5, 8, -8], goal: true, v: '100 %', u: 'doanh thu HIS ↔ Workit khớp · lệch hệ thống tự xử lý trong 24 giờ', n: 'mục tiêu đề xuất, chốt cùng Kế toán' },
+    kpi: { pos: [11.5, 8, -8], goal: true, v: '100 %', u: 'chênh lệch doanh thu HIS ↔ Workit được xử lý trong 24 giờ', n: 'mục tiêu đề xuất, chốt cùng Kế toán' },
     action: { label: '▶ Chạy đối soát', again: '↻ Chạy lại đối soát', run: runReconcile },
     cam: { p: [-2.5, 25, 39], t: [-1.5, 0.5, 1.5] },
   },
@@ -2764,8 +2766,8 @@ const STEPS = [
   {
     id: 'B1', ch: 2, de: '2.1', answers: 'Trả lời ý 2a · báo cáo ngoại lệ', scenario: 1,
     title: 'Tự động cảnh báo khi số liệu hoặc truy cập bất thường',
-    lines: ['<b>Logic 1 · Đối soát doanh thu:</b> so HIS ↔ Workit theo <b>4 nhịp</b>: 3 lần mỗi ngày, mỗi đêm, cuối tuần, cuối tháng trước khóa sổ ngày 5. Mỗi lần chạy ghi log thành công hay thất bại vào Audit Log.',
-            'Có chênh lệch: <b>cảnh báo Microsoft Teams / email</b> khi vượt ngưỡng. <b>Thiếu giao dịch</b>: tự đẩy lại từ HIS sang Workit qua API Gateway, chạy lại sau X giờ. <b>Lệch số tiền</b> hoặc vẫn còn lệch: phiếu ITSM cho Kế toán. Giai đoạn 1 đọc thẳng HIS, Workit (chỉ đọc, số tổng), giai đoạn 2 đọc Data realtime, Data Warehouse. <button type="button" class="recon-btn" data-recon>Xem 4 nhịp →</button>',
+    lines: ['<b>Logic 1 · Đối soát doanh thu:</b> so HIS ↔ Workit theo <b>4 tần suất</b>: 3 lần mỗi ngày, mỗi đêm, cuối tuần, cuối tháng trước khóa sổ ngày 5. Mỗi lần chạy ghi log thành công hay thất bại vào Audit Log.',
+            'Có chênh lệch: <b>cảnh báo Microsoft Teams / email</b> khi vượt ngưỡng. <b>Thiếu giao dịch</b>: tự đẩy lại từ HIS sang Workit qua API Gateway, chạy lại sau X giờ. <b>Lệch số tiền</b> hoặc vẫn còn lệch: phiếu ITSM cho Kế toán. Giai đoạn 1 đọc thẳng HIS, Workit (chỉ đọc, số tổng), giai đoạn 2 đọc Data realtime, Data Warehouse. <button type="button" class="recon-btn" data-recon>Xem 4 tần suất →</button>',
             '<b>Logic 2 · Hành vi bất thường:</b> AI đọc <b>Audit Log</b> (đăng nhập lạ, Admin ngoài giờ, truy cập hồ sơ hàng loạt) rồi cảnh báo Teams / email.',
             'Các quy tắc khác (giảm giá, hoàn tiền vượt ngưỡng…) <b>cấu hình theo cùng mẫu</b>: nguồn dữ liệu, lịch chạy, ngưỡng, người nhận.'],
     why: ['Vì sao', 'ngành y tế mất trung bình 279 ngày để phát hiện và khoanh vùng một vụ vi phạm. Tự phát hiện sớm rẻ hơn khoảng 0,9 triệu USD mỗi vụ (IBM 2025).'],
@@ -2873,7 +2875,7 @@ const STEPS = [
                ['t3', 'Mức 3', 'HRM, ITSM, BI', '36 giờ', '24 giờ', 100]]
               .map(([c, lv, sys, rto, rpo, w]) => `<div class="v-bar-r"><span><b>${lv}</b>${sys}</span><div class="v-track"><div class="v-fill ${c}" style="--w:${w}%">${rto}</div></div><small>mất dữ liệu tối đa ${rpo}</small></div>`).join('')}
           </div>
-          <div class="v-note" title="HIS, MSG 115 chạy lại trên môi trường dự phòng luôn sẵn sàng. Mức 2, 3 dựng lại từ bản sao lưu. Gián đoạn kéo dài: bán offline, hệ thống ghi nhận riêng, tiếp đón bằng giấy.">${ico('clinic')}<span>Gián đoạn dài: <b>bán offline</b>, ghi nhận riêng</span></div>
+          <div class="v-note" title="HIS, MSG 115 chạy lại trên môi trường dự phòng luôn sẵn sàng. Mức 2, 3 dựng lại từ bản sao lưu. Gián đoạn kéo dài: chạy quy trình giấy tạm thời, hệ thống ghi nhận riêng, tiếp đón bằng giấy.">${ico('clinic')}<span>Gián đoạn dài: <b>quy trình giấy tạm thời</b>, nhập lại sau</span></div>
         </div>
       </div>
       <div class="m-band v-band"><p>“Bản sao lưu chưa từng khôi phục thử thì chưa phải bản sao lưu.” · Quy tắc 3-2-1-1-0</p>
@@ -2919,12 +2921,12 @@ const STEPS = [
     milestones: [
       { when: '0–30 ngày', title: 'Nhìn rõ, chưa động vào', items: ['Ghi nhận các chỉ số đo được để nắm hiện trạng', 'Vẽ bản đồ luồng dữ liệu, đo mức lệch', '2.2|Kiểm kê toàn bộ tài khoản quản trị', '2.3|Thử khôi phục bản sao lưu HIS', 'Lắng nghe Giám đốc và IT từng đơn vị: nhu cầu, vướng mắc'],
         focus: TODAY_SYS, flows: () => false, only: true, today: true }, // today's systems only, with today's load
-      { when: '1–3 tháng', title: 'Thắng nhanh, ít rủi ro', items: ['3.2|Trình kế hoạch 12 tháng kèm ngân sách, đề xuất chiến lược 1–3 năm', '1.1|Thí điểm đối chiếu doanh thu tự động, tự xử lý khi lệch', 'Báo cáo bất thường đầu tiên', '2.2|Kho mật khẩu tập trung, đăng nhập hai bước', 'Khóa tài khoản người đã nghỉ', 'Thử khôi phục các hệ thống còn lại', 'Thí điểm một vài ý tưởng ứng dụng AI'],
+      { when: '1–3 tháng', title: 'Thắng nhanh, ít rủi ro', items: ['3.2|Trình kế hoạch 12 tháng kèm ngân sách, đề xuất chiến lược 1–3 năm', '1.1|Thí điểm đối chiếu doanh thu tự động, tự xử lý khi lệch', '2.2|Đăng nhập hai bước, khóa tài khoản người đã nghỉ', 'Đo và đánh giá điểm CIS hiện tại', 'Báo cáo bất thường đầu tiên', 'Thử khôi phục các hệ thống còn lại', 'Thí điểm 2 ý tưởng AI rủi ro thấp'],
         focus: [...TODAY_SYS, 'ai'], flows: f => f.from === 'ai', only: true, today: true,
         extra: [['his', 'ai', 'read', { arc: 1.4, off: -1.2, r: 0.07, tubeK: 2.3, pSize: 1.6, n: 12, color: 0x008C84 }], ['workit', 'ai', 'read', { arc: 1.1, off: -1.0, r: 0.07, tubeK: 2.3, pSize: 1.6, n: 12, color: 0x008C84 }]] }, // AI checks HIS and Workit data directly from their backups // + AI and alerts; no replica yet, so HIS / Workit still carry today's load
-      { when: '3–6 tháng', title: 'Xây tầng giữa, chuẩn quy trình', items: ['1.1|API Gateway (trạm trung chuyển)', '1.2|Data Warehouse: kho số liệu chung cho báo cáo quản trị', '2.1|Cảnh báo tự động qua Teams, email: bảo mật, dữ liệu lệch', '3.2|Sắp xếp, tối ưu quy trình IT: sự cố, cấp quyền, thay đổi; áp dụng SLA 4 mức', 'Diễn tập khôi phục HIS lần đầu', 'Thí điểm vận hành IT theo một cụm vùng'],
+      { when: '3–6 tháng', title: 'Xây tầng giữa, chuẩn quy trình', items: ['1.1|API Gateway (trạm trung chuyển)', '1.2|Data Warehouse: kho số liệu chung cho báo cáo quản trị', '2.1|Cảnh báo tự động qua Teams, email: bảo mật, dữ liệu lệch', '2.2|Kho mật khẩu tập trung cho tài khoản quản trị', '3.2|Sắp xếp, tối ưu quy trình IT: sự cố, cấp quyền, thay đổi; áp dụng SLA 4 mức', 'Diễn tập khôi phục HIS lần đầu', 'Thí điểm vận hành IT theo một cụm vùng'],
         focus: [...TODAY_SYS, 'ai', 'gateway', 'dwh'], flows: null, only: true, load: LOAD_MID }, // + API Gateway and Data Warehouse: reports leave HIS, load drops part-way
-      { when: '6–12 tháng', title: 'Chuẩn hóa và mở rộng', items: ['1.2|Báo cáo chạy riêng, không làm chậm HIS', '2.3|Hệ thống dự phòng cho HIS, MSG 115', 'Đo và đánh giá điểm CIS hiện tại', 'Kế hoạch nâng điểm và tăng cường an toàn bảo mật', 'Trực an ninh 24/7, hướng tới ISO 27001', '3.1|Mở rộng mô hình cụm vùng toàn quốc', 'AI Portal: lãnh đạo hỏi, AI trả lời số liệu'],
+      { when: '6–12 tháng', title: 'Chuẩn hóa và mở rộng', items: ['1.2|Báo cáo chạy riêng, không làm chậm HIS', '2.3|Hệ thống dự phòng cho HIS, MSG 115', 'Nâng điểm CIS, tăng cường an toàn bảo mật', 'Trực an ninh 24/7, hướng tới ISO 27001', '3.1|Mở rộng mô hình cụm vùng toàn quốc', 'AI Portal: lãnh đạo hỏi, AI trả lời số liệu'],
         focus: null, flows: null, audit: true }, // the full target architecture
     ],
     focus: null, flows: null, kpi: null, cam: { p: [-2.5, 27, 30], t: [-1.5, 0.5, -1] },
@@ -2934,7 +2936,7 @@ const STEPS = [
     title: 'Bốn nhóm con số để Ban điều hành theo dõi IT mỗi tháng',
     lines: ['Báo cáo hiện trạng trong 30 ngày, chốt mục tiêu cùng các đơn vị sau 2–3 tháng. Số trong thẻ là <b>đề xuất theo thông lệ ngành</b>.',
             'Bảng điểm IT <b>một trang, mỗi tháng</b> lên Ban điều hành. Nguồn số liệu: ITSM đang có.',
-            '<b>SLA 4 mức</b>: khẩn cấp và cao phản hồi trong 15 phút, trung bình và yêu cầu trong 30 phút. Thời gian xử lý sự cố: 4h, 8h, 24h, 36h. Khẩn cấp 4h khớp mức khôi phục HIS ở trang 8, có trực 24/7 và phương án tạm như bán offline. SLA với đối tác ghi trong hợp đồng, trễ hạn trừ phí.'],
+            '<b>SLA 4 mức</b>: khẩn cấp và cao phản hồi trong 15 phút, trung bình và yêu cầu trong 30 phút. Thời gian xử lý sự cố: 4h, 8h, 24h, 36h. Khẩn cấp 4h khớp mức khôi phục HIS ở trang 8, có trực 24/7 và phương án tạm như quy trình giấy. SLA với đối tác ghi trong hợp đồng, trễ hạn trừ phí.'],
     why: ['Tránh “quả dưa hấu”', 'SLA xanh bên ngoài, người dùng đỏ bên trong, nên đo cả máy lẫn người.'],
     light: true,
     cards: [`<div class="m-slide">
@@ -2942,9 +2944,9 @@ const STEPS = [
       <div class="sc-doc">
         <div class="sc-top"><span class="sc-logo">BẢNG ĐIỂM IT</span><span>Mẫu báo cáo một trang · mỗi tháng · gửi Ban điều hành</span><span class="sc-tag">◎ Mục tiêu đề xuất</span></div>
         <div class="sc-gauges">
-          ${[['Ổn định', 99.9, '99,9 %', 'HIS sẵn sàng', ['Sự cố xử lý đúng SLA', 'Bán offline khi HIS gián đoạn'], '#019147'],
+          ${[['Ổn định', 99.9, '99,9 %', 'HIS sẵn sàng', ['Sự cố xử lý đúng SLA', 'Quy trình giấy tạm thời khi HIS gián đoạn'], '#019147'],
              ['An toàn', 100, '100 %', 'phiên Admin có MFA', ['0 tài khoản dùng chung', '0 người nghỉ còn tài khoản'], '#00897F'],
-             ['Số liệu', 100, '100 %', 'doanh thu HIS ↔ Workit khớp', ['Lệch tự xử lý trong 24h', 'Lưu lịch sử mọi chênh lệch'], '#1D6FA8'],
+             ['Số liệu', 100, '100 %', 'chênh lệch được xử lý trong 24 giờ', ['Đối soát HIS ↔ Workit 4 tần suất', 'Lưu lịch sử mọi chênh lệch'], '#1D6FA8'],
              ['Hiệu quả & người dùng', 85, '≥ 85 %', 'đội ngũ nhân sự hài lòng', ['Xử lý ngay lần đầu ≥ 70 %', 'Dự án đúng hạn, đúng ngân sách'], '#6A5ACD']]
             .map(([t, v, n, l, sub, c], k) => `<div class="sc-g" style="--c:${c};animation-delay:${k * 0.08}s">
               <div class="sc-gt">${t}</div>
@@ -2984,9 +2986,9 @@ const STEPS = [
         <div class="m-crit-h"><span></span><span>Tiêu chí</span><span>Đo bằng</span></div>
         ${[['data', 'Đánh giá hiện trạng CNTT, xác nhận các giả định', 'Báo cáo gửi Ban lãnh đạo trong 30 ngày'],
            ['key', 'Kiểm kê và siết tài khoản quản trị', '100 % tài khoản có người chịu trách nhiệm, người đã nghỉ bị khóa, có đăng nhập hai bước'],
-           ['backup', 'Thử khôi phục bản sao lưu cho tất cả hệ thống', '100 % hệ thống thử khôi phục thành công, có biên bản'],
+           ['backup', 'Thử khôi phục bản sao lưu cho tất cả hệ thống', '100 % hệ thống đã thử khôi phục, có biên bản'],
            ['link', 'Thí điểm đối chiếu doanh thu HIS–Workit', 'Chạy tự động ở ít nhất một cơ sở, có báo cáo bất thường đầu tiên'],
-           ['spark', 'Thí điểm một vài ý tưởng ứng dụng AI', '2 ý tưởng có số đo trước và sau khi chạy thử'],
+           ['spark', 'Thí điểm 2 ý tưởng AI rủi ro thấp', '2 ý tưởng có số đo trước và sau khi chạy thử'],
            ['route', 'Trình kế hoạch 12 tháng kèm ngân sách và định hướng 1–3 năm', 'Đã trình Ban lãnh đạo'],
            ['clinic', 'Không gây gián đoạn khám chữa bệnh', 'Không có sự cố nghiêm trọng do thay đổi của IT']]
           .map(([ic, c, m], i, all) => `<div class="m-crit-r${i === all.length - 1 ? ' key' : ''}">${ico(ic)}<b>${c}</b><span><i>✓</i>${m}</span></div>`).join('')}
@@ -3005,12 +3007,12 @@ const STEPS = [
       ${head('', 'Vấn đề đều có một <em>con số</em> để đo lường')}
       <div class="v-sum">
         ${[1, 2, 3].map(part => `<div class="v-col p${part}"><div class="m-grp"><i>${part}</i>${CHAPTERS[part].split(' · ')[1]}</div><div class="v-stack">${[
-          ['1.1', 'API Gateway một cửa, đối soát 4 nhịp: ngày, đêm, tuần, tháng', '100 %', 'doanh thu khớp, lệch sửa ≤ 24 giờ'],
+          ['1.1', 'API Gateway một cửa, đối soát 4 tần suất: ngày, đêm, tuần, tháng', '100 %', 'chênh lệch được xử lý trong 24 giờ'],
           ['1.2', 'Báo cáo đọc bản sao, không hỏi thẳng HIS, Workit', '85 → 10 %', 'giảm tải truy vấn lên HIS, Workit'],
-          ['2.1', 'Audit Log + AI cảnh báo bảo mật, số liệu đối chiếu lệch', '24/7', 'giám sát, đo thời gian phát hiện'],
+          ['2.1', 'Audit Log + AI cảnh báo bảo mật, số liệu đối chiếu lệch', '≤ 15 phút', 'từ bất thường đến cảnh báo'],
           ['2.2', 'PAM: kho mật khẩu tập trung, quyền 2 giờ, MFA 100 %', '0', 'tài khoản Admin dùng chung'],
           ['2.3', 'Bảo vệ, ứng phó, khôi phục theo mức, sao lưu 3-2-1-1-0', '≤ 4 giờ', 'HIS chạy lại, 0 lỗi thử khôi phục'],
-          ['3.1', 'Hai nhánh HQ và IT Operations, bạn trực, họp nhịp hằng tháng', '100 %', 'việc IT có một người chịu trách nhiệm rõ ràng'],
+          ['3.1', 'Hai nhánh HQ và IT Operations, đơn vị kết đôi, họp định kỳ', '100 %', 'việc IT có một người chịu trách nhiệm rõ ràng'],
           ['3.2', 'Lộ trình 12 tháng, bảng điểm 4 nhóm mỗi tháng', '7', 'cam kết 90 ngày, mốc đúng hạn'],
         ].filter(([d]) => +d[0] === part).map(([d, fix, n, l]) => `<div class="v-tile"><div class="v-m"><strong>${n}</strong><span>${l}</span></div><div class="v-body"><span class="m-num de">${d}</span><small>${GAP[d]}</small><b>${fix}</b></div></div>`).join('')}</div></div>`).join('')}
       </div>
@@ -3035,7 +3037,7 @@ const STEPS = [
       <div class="m-jump-cap">Mở nhanh khi được hỏi</div>
       <div class="m-jump-rows quiet">
         ${(cards => ['1', '2', '3'].map(k => `<div class="m-jump-row"><div class="m-grp"><i>${k}</i>${CHAPTERS[+k].split(' · ')[1]}</div><div class="m-jump">${cards.filter(c => c[2][0] === k)
-          .map(([id, ic, t, d]) => `<button data-go="${id}">${ico(ic)}<span><b>${t}</b><span class="t">${d}</span></span><span class="go">→</span></button>`).join('')}</div></div>`).join(''))([['A3', 'data', '1.1 · Kết nối và đối soát', 'API Gateway, đối soát 4 nhịp: ngày, đêm, tuần, tháng'],
+          .map(([id, ic, t, d]) => `<button data-go="${id}">${ico(ic)}<span><b>${t}</b><span class="t">${d}</span></span><span class="go">→</span></button>`).join('')}</div></div>`).join(''))([['A3', 'data', '1.1 · Kết nối và đối soát', 'API Gateway, đối soát 4 tần suất: ngày, đêm, tuần, tháng'],
            ['A4', 'pulse', '1.2 · Báo cáo không làm chậm HIS', 'Data realtime, Data Warehouse'],
            ['B1', 'building', '2.1 · Báo cáo ngoại lệ', 'So sánh 3 lần/ngày, cảnh báo Teams / email'],
            ['R1', 'shield', '2.2 · Mật khẩu Admin', 'Kho mật khẩu tập trung, người thứ hai duyệt'],
@@ -3185,7 +3187,7 @@ function openRecon() {
                 ['Mỗi đêm', 'Đầy đủ 4 cặp: doanh thu, bệnh nhân, nhân sự, số dòng gửi ↔ nhận', 'Bảng khớp / lệch trên Power BI'],
                 ['Cuối tuần', 'Tổng tuần, và tổng tuần = cộng các ngày đã đối soát (bắt sửa lùi ngày)', 'Báo cáo tuần cho Kế toán, IT'],
                 ['Cuối tháng · trước khóa sổ ngày 5', 'Tổng tháng, ngưỡng lệch = 0', 'Biên bản đối soát một trang lên Ban điều hành']];
-  openPopup(`<h3>Đối soát doanh thu HIS ↔ Workit · 4 nhịp, 1 vòng xử lý</h3>
+  openPopup(`<h3>Đối soát doanh thu HIS ↔ Workit · 4 tần suất, 1 vòng xử lý</h3>
      <p class="bg-sub">Quy tắc cố định so số để kết quả kiểm toán được. AI phân loại nguyên nhân và đề xuất cách xử lý.</p>
      <div class="rc-loop">
        <div><b>1 · So số</b>theo mốc chốt, số tổng theo cơ sở</div><i>→</i>
